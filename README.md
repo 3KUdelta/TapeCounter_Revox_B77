@@ -1,7 +1,7 @@
 # TapeCounter_Revox_B77
 Arduino Nano based, digital counter for a Revox B77 Reel-to-Reel.
 
-Original code form https://old-fidelity-forum.de/thread-38940.html
+Original idea & code from https://old-fidelity-forum.de/thread-38940.html
 Special thanks to DIYLAB-Bruno, User "Gogosch" and all that have participated - excellent work, Gentlemen!
 
 *** this is currently work in progress ***
