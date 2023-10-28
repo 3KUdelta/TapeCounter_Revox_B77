@@ -11,6 +11,7 @@ Version 2.0 runs smooth:
 - 4 white markers on right spooling motor
 - 1 EC12 RE1 360 Degree Rotary Encocer with push button
 - 1 0.91 inch OLED module white 128X32
+- 1 Mini DC-DC 12-24V To 5V 3A Step Down Power Supply Module 
 
 Basic Functionality:
 - Click on boot: total running hours
