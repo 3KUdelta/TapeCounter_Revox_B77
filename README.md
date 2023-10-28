@@ -1,6 +1,8 @@
 # TapeCounter_Revox_B77
 Arduino Nano based, digital counter for a Revox B77 Reel-to-Reel.
 
+[![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/IMG_3243.jpg)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
+
 Original idea & code from https://old-fidelity-forum.de/thread-38940.html
 Special thanks to DIYLAB-Bruno, User "Gogosch" and all that have participated - excellent work, Gentlemen!
 
@@ -25,4 +27,12 @@ Extended Functionality (more hardware needed):
 
 [![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/B77_Tape_Counter_Scheme.png)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
 
+[![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/IMG_3231.jpg)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
 
+[![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/IMG_3314.jpg)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
+
+[![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/IMG_3241.jpg)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
+
+[![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/IMG_3313.jpg)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
+
+[![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/IMG_3315.jpg)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
