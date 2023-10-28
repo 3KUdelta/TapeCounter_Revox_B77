@@ -22,7 +22,6 @@ Extended Functionality (more hardware needed):
 - Pause indicator (add. Pause Memory PCB needed: eBay Mauro200id)
 - Auto rewind to 0 on double click (two relais needed *** WORK IN PROGRESS ***)
 
-[![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/TapeCounterB77.png)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
+[![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/B77_Tape_Counter_Scheme.png)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
 
-[![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/B77_voltage_divider_speed_pin.png)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
 
