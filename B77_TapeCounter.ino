@@ -158,7 +158,7 @@ welcome helloText[2] = {
 };
 
 volatile uint32_t operatingHoursCounter, saveCounter, intervalA, intervalB, intervalC, intervalD, intervalE, lastMeterPast;
-volatile boolean ledTrigger, saveTrigger, speedTrigger, pauseTrigger, lockDisplay, pastPinA, pinA;
+volatile boolean ledTrigger, saveTrigger, speedTrigger, pauseTrigger, lockDisplay, pastPinA, pinA, rewindToZero;
 volatile byte mode, loopCounter;
 volatile byte brightness = BRIGHTNESS;
 /////////////////////////////// COUNTER VARS ///////////////////////////////
@@ -383,7 +383,7 @@ void SaveCounter() {
 /**************************************************************************/
 /*!
    @brief   This function will be called when encoder turned
-            sense_up is true
+   @param   upsense  boolean true if sense is cw, false if ccw
 */
 /**************************************************************************/
 void EncoderRotated(bool upsense) {
@@ -426,41 +426,16 @@ void ButtonClick() {
 /**************************************************************************/
 /*!
    @brief   This function will be called when the button
-			was pressed 2 times in a short timeframe. Rewinds the tape to zero.
+	    was pressed 2 times in a short timeframe. Rewinds the tape to zero.
 */
 /**************************************************************************/
 void ButtonDoubleClick() {
-  int startCounter = counter;
-  while (counter > 0) {
-    digitalWrite(REW_PIN, HIGH);
-    delay(100);
-    digitalWrite(REW_PIN, LOW);
-    if (counter == 100) {
-      digitalWrite(STOP_PIN, HIGH);
-      if (startCounter > 150) delay(5000);
-      else delay(3000);
-      digitalWrite(STOP_PIN, LOW);
-      digitalWrite(REW_PIN, HIGH);
-      delay(100);
-      digitalWrite(REW_PIN, LOW);
-    } 
-    if (counter == 30) {
-      digitalWrite(STOP_PIN, HIGH);
-      delay(2000);
-      digitalWrite(STOP_PIN, LOW);
-      digitalWrite(REW_PIN, HIGH);
-      delay(100);
-      digitalWrite(REW_PIN, LOW);
-    }
-  }
-  digitalWrite(STOP_PIN, HIGH);
-  delay(100);
-  digitalWrite(STOP_PIN, LOW);
+  rewindToZero = true;
 }
 /**************************************************************************/
 /*!
    @brief   This function will be called often,
-			while the button is pressed for a long time.
+	    while the button is pressed for a long time.
 */
 /**************************************************************************/
 void ButtonLongPress() {
@@ -498,7 +473,7 @@ void ButtonLongPress() {
 /**************************************************************************/
 /*!
    @brief   This function will be called once, when the button is
-			pressed for a long time.
+	    pressed for a long time.
 */
 /**************************************************************************/
 void ButtonLongPressStart() {
@@ -517,7 +492,7 @@ void ButtonLongPressStart() {
 /**************************************************************************/
 /*!
    @brief   This function will be called once, when the button is
-			released after beeing pressed for a long time.
+	    released after beeing pressed for a long time.
 */
 /**************************************************************************/
 void ButtonLongPressStop() {
