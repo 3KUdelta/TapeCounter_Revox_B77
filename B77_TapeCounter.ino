@@ -425,23 +425,6 @@ void doRewind() {
 
 /**************************************************************************/
 /*!
-   @brief   Helper function: sets global boolean variable standsStill
-*/
-/**************************************************************************/
-void detectMovement() {
-  if (millis() > intervalM + 500) {
-    intervalM = millis();
-    if (prevCounter == counter) {
-      movement = "still";
-    } else {
-      movement = "runs";
-    }
-    prevCounter = counter;
-  }
-}
-
-/**************************************************************************/
-/*!
    @brief   Save counter data to EEPROM.
 */
 /**************************************************************************/
