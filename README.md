@@ -15,6 +15,8 @@ Version 2.0 stable:
 - Pause indicator (needs Pause Memory PCB: eBay Mauro200id)
 - Auto rewind to 0 on double click (needs relais module)
 
+Hardware needed:
+
 - 2 HW-006 V1.3 Line Tracker Sensor Modules
 - 4 white markers on right spooling motor
 - 1 EC12 RE1 360 Degree Rotary Encocer with push button
