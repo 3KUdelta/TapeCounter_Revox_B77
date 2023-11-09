@@ -1,5 +1,5 @@
 # TapeCounter_Revox_B77
-Arduino Nano based, digital counter for a Revox B77 Reel-to-Reel.
+Arduino Nano based, digital counter for a Revox B77 Reel-to-Reel with Rewind2Zero function.
 
 [![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/IMG_3243.jpg)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
 
