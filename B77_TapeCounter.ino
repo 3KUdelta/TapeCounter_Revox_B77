@@ -43,8 +43,8 @@
    All modifications done especially for a B77 MKI - HiFi Labor rebuild
    hifilabor.ch, Marc Stähli - Vielen Dank für die tolle und solide Arbeit!
 
-   Using an Arduino Nano with digital pins on 5V (!ESP pins are 3.3V!)
-   Using two HW-006 V.1.3 Line Tracker Sensor Modules and two white segments on right spooling
+   Using an Arduino Nano with igital pins on 5V (!ESP pins are 3.3V!)
+   Using two HW-006 V.1.3 Line Tracker Sensor Modules and two white segmens on right spooling
    motor feeding Pin 2 and 3 at the Nano for interrupts
    Using one 360 Degree Rotary Encoder EC12 RE1 for button push and turning
 
@@ -52,13 +52,14 @@
    - Transistor Q1 on Capstan Speed Control PCP (Collector@Q1) delivers 12 V at 7.5 ips and
      0 V at 3.75 ips, fed into SPEED_Pin via voltage divider R1 10 KOhm, R2 6.8 KOhm = 4.8 V
    - added display offset for x and y for fitting purposes
-   - added rotary encoder/switch combination (unfortunately, without any interrupts left on tne Nano 
-     not very reliable)
+   - added rotary encoder/switch combination
       - knob rotation lets you switch between counter, meter and seconds
       - double click shows total running time
    - found a compromize with "real-time" settings measuring at the right reel
-   - hooked Nano Pin (9) to Pause PCB from Mauro200id - ebay (PIC foot 6  --> is low on pause)
-   - auto rewind to 0 on double-click (needs 2 relais to switch the 24V, Pin10 and 11) - work in progress
+   - hooked Nano Pin (9) to Pause PCB from Mauro200id - ebay (PIC foot 6  --> is low on pause)fj
+   - added rewind2zero functionality  - 2 relais hooked to Nano pin 10 and 11 controlling
+     the connection of 24V from the remote control pins to pin 3 and 6 in order to do rewind and 
+     stop.
 */
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,16 +109,17 @@
 #define STOP_PIN 11           // Triggers Relais to Stop
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-#define ENCODER_DO_NOT_USE_INTERRUPTS  // next version: ESP32 and interrupts (much more stable)
+#define ENCODER_DO_NOT_USE_INTERRUPTS
 #include <OneButton.h>
 #include <Encoder.h>
 #include <EEPROM.h>
 #include <SSD1306Ascii.h>
 #include "SSD1306AsciiWire.h"
 #include "tapecounter_16x24.h"
+#include "tapecounter_21x32.h"
 
 #if HELLO_LOGO
-#include "logo_mst1.h"   // ReVox Logo
+#include "logo_mst1.h"
 #endif
 
 // Time constants.
@@ -154,18 +156,22 @@ typedef struct
 /**************************************************************************/
 welcome helloText[2] = {
   /*Line1*/ { "HiFiLabor.ch", 52 + OLED_X_OFFSET, 1 },
-  /*Line2*/ { "COUNTER 2.0", 52 + OLED_X_OFFSET, 2 }
+  /*Line2*/ { "COUNTER 2.0", 52 + OLED_X_OFFSET, 2 },
 };
 
-volatile uint32_t operatingHoursCounter, saveCounter, intervalA, intervalB, intervalC, intervalD, intervalE, lastMeterPast;
-volatile boolean ledTrigger, saveTrigger, speedTrigger, pauseTrigger, lockDisplay, pastPinA, pinA, rewindToZero;
+volatile uint32_t operatingHoursCounter, saveCounter, intervalA, intervalB, intervalC, intervalD, intervalE, intervalF, intervalM;
+volatile bool ledTrigger, speedTrigger, pauseTrigger, lockDisplay, pastPinA, pinA;
 volatile byte mode, loopCounter;
 volatile byte brightness = BRIGHTNESS;
+/////////////////////////////// Rew2Zero VARS //////////////////////////////
+String movement;
+bool rewindToZero = false;
+long counterStart, prevCounter;
 /////////////////////////////// COUNTER VARS ///////////////////////////////
-volatile long counter, pastCounter, longCounterSeconds, pastLongCounterSeconds;
-volatile float counterMeters, pastCounterMeters, counterSeconds, pastCounterSeconds, secsPerPulse, mmPerPulse, speedActual, pastSpeedActual;
-volatile float numSegs = NUMSEGS;
-volatile float scope = SCOPE;
+long counter, pastCounter, longCounterSeconds, pastLongCounterSeconds;
+float counterMeters, pastCounterMeters, counterSeconds, pastCounterSeconds, secsPerPulse, mmPerPulse, speedActual, pastSpeedActual;
+float numSegs = NUMSEGS;
+float scope = SCOPE;
 ////////////////////////////////////////////////////////////////////////////
 
 /**************************************************************************/
@@ -319,6 +325,32 @@ void loop() {
     pauseTrigger = false;
   }
 
+  // Detect movement
+  if (millis() > intervalM + 500) {
+    intervalM = millis();
+    if (prevCounter == counter) {
+      movement = "still";
+    } else {
+      movement = "runs";
+    }
+    prevCounter = counter;
+  }
+
+  // Rewind to zero procedure
+  if (rewindToZero && counter > 0) {
+    if (movement == "still") {
+      counterStart = counter;
+      doRewind();
+    }
+    if (counter == 100 && counterStart != counter) doStop();
+    if (counter == 40 && counterStart != counter) doStop();
+    if (counter == 10 && counterStart != counter) doStop();
+    if (counter == 1) {
+      doStop();
+      rewindToZero = false;
+    }
+  }
+
   // This section is executed every 30ms.
   if (millis() > intervalA + 30) {
     intervalA = millis();
@@ -363,6 +395,50 @@ void loop() {
     SaveCounter();
   }
 }
+/**************************************************************************/
+/*!
+   @brief   Helper function: Trigger the STOP button
+*/
+/**************************************************************************/
+void doStop() {
+  if (millis() > intervalF + 250) {  // avoiding double-triggering
+    intervalF = millis();
+    digitalWrite(STOP_PIN, HIGH);
+    delay(10);
+    digitalWrite(STOP_PIN, LOW);
+  }
+}
+
+/**************************************************************************/
+/*!
+   @brief   Helper function: Trigger the REWIND button
+*/
+/**************************************************************************/
+void doRewind() {
+  if (millis() > intervalB + 1500) {  // avoiding double-triggering
+    intervalB = millis();
+    digitalWrite(REW_PIN, HIGH);
+    delay(10);
+    digitalWrite(REW_PIN, LOW);
+  }
+}
+
+/**************************************************************************/
+/*!
+   @brief   Helper function: sets global boolean variable standsStill
+*/
+/**************************************************************************/
+void detectMovement() {
+  if (millis() > intervalM + 500) {
+    intervalM = millis();
+    if (prevCounter == counter) {
+      movement = "still";
+    } else {
+      movement = "runs";
+    }
+    prevCounter = counter;
+  }
+}
 
 /**************************************************************************/
 /*!
@@ -383,7 +459,7 @@ void SaveCounter() {
 /**************************************************************************/
 /*!
    @brief   This function will be called when encoder turned
-   @param   upsense  boolean true if sense is cw, false if ccw
+            sense_up is true
 */
 /**************************************************************************/
 void EncoderRotated(bool upsense) {
@@ -426,16 +502,20 @@ void ButtonClick() {
 /**************************************************************************/
 /*!
    @brief   This function will be called when the button
-	    was pressed 2 times in a short timeframe. Rewinds the tape to zero.
+			was pressed 2 times in a short timeframe. Initiates the rewind to zero
+      procedure in setting the flag to true
 */
 /**************************************************************************/
 void ButtonDoubleClick() {
-  rewindToZero = true;
+  if (counter > 0) {
+    rewindToZero = true;
+    movement = "still";  // trick the procedure to start rewinding
+  }
 }
 /**************************************************************************/
 /*!
    @brief   This function will be called often,
-	    while the button is pressed for a long time.
+			while the button is pressed for a long time.
 */
 /**************************************************************************/
 void ButtonLongPress() {
@@ -473,7 +553,7 @@ void ButtonLongPress() {
 /**************************************************************************/
 /*!
    @brief   This function will be called once, when the button is
-	    pressed for a long time.
+			pressed for a long time.
 */
 /**************************************************************************/
 void ButtonLongPressStart() {
@@ -492,7 +572,7 @@ void ButtonLongPressStart() {
 /**************************************************************************/
 /*!
    @brief   This function will be called once, when the button is
-	    released after beeing pressed for a long time.
+			released after beeing pressed for a long time.
 */
 /**************************************************************************/
 void ButtonLongPressStop() {
@@ -887,7 +967,7 @@ void PollingSpeedInputs() {
 
 /**************************************************************************/
 /*!
-   @brief   Calculating for meter and realtime by gogosch / Marc Stähli
+   @brief   Calculating for meter and realtime by gogosch
 */
 /**************************************************************************/
 void CalculatingSpeed() {
