@@ -34,4 +34,6 @@ Hardware needed:
 
 [![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/IMG_3313.jpg)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
 
-[![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/IMG_3315.jpg)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
+[![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/IMG_3373.jpg)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
+
+[![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/IMG_3369.jpg)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
