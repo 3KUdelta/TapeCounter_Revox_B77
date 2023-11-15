@@ -14,6 +14,7 @@ Version 2.0 stable:
 - Hold to change brightness
 - Pause indicator (needs Pause Memory PCB: eBay Mauro200id)
 - Auto rewind to 0 on double click (needs relais module)
+- 3D files for relais bracket, main board distance bracket and IR Sensor clips are included
 
 Hardware needed:
 
