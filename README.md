@@ -24,8 +24,6 @@ Hardware needed:
 - 1 Mini DC-DC 12-24V To 5V 3A Step Down Power Supply Module
 - 1 Relay module 2 Channel 5V 12V Relay Module Board Shield with Optocoupler Support High and Low Level Trigger for Arduino 
 
-[![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/B77_Tape_Counter_Scheme.png)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
-
 [![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/B77_Tape_Counter_Scheme_w_relais.png)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
 
 [![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/IMG_3314.jpg)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
