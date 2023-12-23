@@ -54,7 +54,7 @@
    - added display offset for x and y for fitting purposes
    - added rotary encoder/switch combination
       - knob rotation lets you switch between counter, meter and seconds
-      - double click shows total running time
+      - double click automatically rewinds to counter zero
    - found a compromize with "real-time" settings measuring at the right reel
    - hooked Nano Pin (9) to Pause PCB from Mauro200id - ebay (PIC foot 6  --> is low on pause)fj
    - added rewind2zero functionality  - 2 relais hooked to Nano pin 10 and 11 controlling
