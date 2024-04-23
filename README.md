@@ -22,7 +22,8 @@ Hardware needed:
 - 4 white markers on right spooling motor
 - 1 EC12 RE1 360 Degree Rotary Encocer with push button
 - 1 0.91 inch OLED module white 128X32
-- 1 Mini DC-DC 12-24V To 5V 3A Step Down Power Supply Module
+- ~~1 Mini DC-DC 12-24V To 5V 3A Step Down Power Supply Module~~ (edit: unfortunately this causes a very low disturbing noise)
+- 1 Mini 230V AC to 5V DC 2A power supply (to get clean discrete power for your arduino & acessories)
 - 1 Relay module 2 Channel 5V 12V Relay Module Board Shield with Optocoupler Support High and Low Level Trigger for Arduino 
 
 [![TapeCounter_Revox_B77](https://github.com/3KUdelta/TapeCounter_Revox_B77/blob/main/images/B77_Tape_Counter_Scheme_w_relais.png)](https://github.com/3KUdelta/TapeCounter_Revox_B77)
